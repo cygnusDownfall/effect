@@ -1,54 +1,86 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "effect")]
-public class Effect :ScriptableObject
+public class Effect : ScriptableObject
 {
-    public int effect_rate=100;
-    public int duration=1;
-    public  string effect_detail;
+    #region properties
+    public byte effect_rate = 100;
+    public byte duration = 1;
+    [SerializeField] protected string detail;
+    public virtual string effect_detail
+    {
+        get
+        {
+            return detail;
+        }
+        set
+        {
+            detail = value;
+        }
+    }
     public float callbyseccond = 1;
 
-            
-    protected List<playerInfo> playerImpacteds=new List<playerInfo>();
+    public playerInfo playerImpacteds;
+    public GameObject source;
+    #endregion
+    #region event
+    public UnityEvent<Effect> onStart, onTrigger, onEnd;
+    #endregion
 
-    public delegate void EffectDelegate(GameObject[] target);
-    public IEnumerator trigger(GameObject[] target)
+    #region method
+    public delegate void EffectDelegate(GameObject target, GameObject source = null);
+    public IEnumerator trigger(GameObject target)
     {
-        if (Random.value < (effect_rate/100f))
+        float r;
+        if ((r = Random.value) < (effect_rate / 100f))
         {
-            return DurationCall(triggerEffect, target,startEffect,endEffect);
+            Debug.Log("random rate:" + r);
+            return DurationCall(triggerEffect, source, target, startEffect, endEffect);
         }
         return null;
     }
-    public virtual void triggerEffect(GameObject[] targets)
+    #region effect
+    public virtual void triggerEffect(GameObject targets, GameObject source = null)
     {
+        onTrigger.Invoke(this);
 
     }
-    public virtual void startEffect(GameObject[] targets)
+    public virtual void startEffect(GameObject targets, GameObject source = null)
     {
-
+        onStart.Invoke(this);
+        //targets.GetComponent<playerInfo>().addChain(this); add xong moi chay nen khong the dat o day 
     }
-    public virtual void endEffect(GameObject[] targets)
+    public virtual void endEffect(GameObject targets, GameObject source = null)
     {
-
+        onEnd.Invoke(this);
+        targets.GetComponent<playerInfo>().removeChain(this);
+        Destroy(this);
     }
-    public IEnumerator DurationCall(EffectDelegate effect, GameObject[] target, EffectDelegate starteff = null, EffectDelegate endeff = null)
+    #endregion
+    public IEnumerator DurationCall(EffectDelegate effect, GameObject source, GameObject target, EffectDelegate starteff = null, EffectDelegate endeff = null)
     {
         if (starteff != null)
         {
-            starteff(target);
+            starteff(target, source);
         }
         for (float i = 0; i < duration; i += callbyseccond)
         {
-            effect(target);
-            yield return new WaitForSeconds(1);
+            effect(target, source);
+            yield return new WaitForSeconds(callbyseccond);
         }
         if (endeff != null)
         {
-            endeff(target);
+            endeff(target, source);
         }
         yield break;
     }
+    void OnDestroy()
+    {
+        onStart.RemoveAllListeners();
+        onEnd.RemoveAllListeners();
+        onTrigger.RemoveAllListeners();
+    }
+    #endregion
 }

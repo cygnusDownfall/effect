@@ -1,31 +1,41 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "effect/Slow")]
-class slowEffect : Effect
+class slow : Effect
 {
     public int slowScale = 30;
-    List<float> slowValue = new List<float>();
-    public override void triggerEffect(GameObject[] targets)
+    int slowValue = 0;
+    public override string effect_detail
     {
-        foreach (GameObject target in targets)
+        get
         {
-            playerInfo playerInfo;
-            if (target.TryGetComponent<playerInfo>(out playerInfo))
-            {
-                playerImpacteds.Add(playerInfo);
-                float slow=playerInfo.speed * slowScale/100f;
-                slowValue.Add(slow);
-                playerInfo.speed -= slow;
-            }
+            detail = String.Format(
+                (effect_rate != 100) ? "Có {0}% tỷ lệ" : "" +
+                " giảm <color=#00fafa>{1}%</color> tốc chạy kẻ địch trúng chiêu.",
+                 effect_rate, slowScale);
+            return detail;
+        }
+
+    }
+    public override void startEffect(GameObject target, GameObject source = null)
+    {
+        base.startEffect(target);
+        Debug.Log("slow    ");
+        playerInfo playerInfo;
+        if (target.TryGetComponent<playerInfo>(out playerInfo))
+        {
+            playerImpacteds = playerInfo;
+            int slow = Convert.ToInt32(playerInfo.speed * slowScale / 100f);
+
+            slowValue = slow;
+            Debug.Log("Speed of player:"+playerInfo.speed);
+            playerInfo.speed -= slow;
+            Debug.Log("slow value:"+slow);
         }
     }
-    public override void endEffect(GameObject[] gameObjects)
+    public override void endEffect(GameObject gameObjects, GameObject source = null)
     {
-        for(int i=0;i< playerImpacteds.Count;i++)
-        {
-            playerImpacteds[i].speed += slowValue[i];
-        }
-        
+        playerImpacteds.speed += slowValue;
     }
 }

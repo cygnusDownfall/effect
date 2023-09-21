@@ -1,31 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public enum DmgType:ushort{
-    Physic=1,
-    Magic=0
-}
-
-[CreateAssetMenu(fileName = "New Damage Effect", menuName = "effect/Damage")]
 public class damage : Effect
 {
-    public int dmg;
+    public int dmg = 0;
     public DmgType dmgType;
 
-    public override void endEffect(GameObject[] gameObjects)
+    public void Dmg(int damage, DmgType dmgType, GameObject targets)
     {
-        foreach (GameObject target in gameObjects)
-        {
-            playerInfo playerInfo;
-            if (target.TryGetComponent<playerInfo>(out playerInfo))
-            {
-                playerImpacteds.Add(playerInfo);
+        var player = targets.GetComponent<playerInfo>();
+        player.takeDamage(dmg, dmgType);
 
-                playerInfo.takeDamage(dmg, dmgType);
+        breakArmor breakEffect = new breakArmor();
 
-            }
-        }
+        player.addChain(breakEffect);
 
     }
+    public void showDmg(int dmg,DmgType dmgType){
+        var go=Instantiate(playerAssetEffect.Instance.dmgShowObj);
+        var text=go.GetComponentInChildren<TMP_Text>();
+        text.text=System.String.Format("<color={0}>{1}</color>",Dic.singleton.colorOfDame[dmgType],dmg);
+    }
 }
+
