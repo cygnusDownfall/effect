@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public class damage : Effect
 {
@@ -10,16 +11,22 @@ public class damage : Effect
     {
         var player = targets.GetComponent<playerInfo>();
         player.takeDamage(dmg, dmgType);
+        showDmg(damage,dmgType,targets);
 
-        breakArmor breakEffect = new breakArmor();
+        // breakArmor breakEffect = new breakArmor();
 
-        player.addChain(breakEffect);
+        // player.addChain(breakEffect);
 
     }
-    public void showDmg(int dmg,DmgType dmgType){
-        var go=Instantiate(playerAssetEffect.Instance.dmgShowObj);
+    public void showDmg(int dmg,DmgType dmgType,GameObject target){
+        var go=Instantiate(playerAssetEffect.Instance.dmgShowObj,target.transform);
+        go.GetComponentInChildren<Canvas>().worldCamera=Camera.current;
         var text=go.GetComponentInChildren<TMP_Text>();
         text.text=System.String.Format("<color={0}>{1}</color>",Dic.singleton.colorOfDame[dmgType],dmg);
+        var effect=Instantiate(playerAssetEffect.Instance.effectHit);
+        effect.GetComponent<VisualEffect>().SetVector4("color",Dic.singleton.colorMap[dmgType]); 
+        Destroy(effect,1);
+        Destroy(go,2);
     }
 }
 

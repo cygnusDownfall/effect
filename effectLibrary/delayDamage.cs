@@ -19,7 +19,7 @@ public class delayDamage : damage
     public override void endEffect(GameObject targets, GameObject source = null)
     {
         base.endEffect(targets, source);
-        targets.GetComponent<playerInfo>().takeDamage(dmg, dmgType);
+        Dmg(dmg,dmgType,targets);
     }
 
 }

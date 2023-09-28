@@ -19,6 +19,6 @@ public class continuesDamage : damage
     public override void triggerEffect(GameObject targets, GameObject source = null)
     {
         base.triggerEffect(targets);
-        targets.GetComponent<playerInfo>().takeDamage(dmg, dmgType);
+        Dmg(dmg,dmgType,targets);
     }
 }

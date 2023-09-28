@@ -43,8 +43,7 @@ public class testingEffect : MonoBehaviour
                 Debug.Log("end: "+eff);
             });
         }
-        //cardTest.skillObj.GetComponent<skillObj>().on
-        cardTest.effect(players[0].transform, players[1].transform);
+        cardTest.effect(players[0].transform, players[1].transform.position);
 
     }
 
