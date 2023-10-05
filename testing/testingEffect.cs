@@ -5,16 +5,17 @@ using UnityEngine;
 
 public class testingEffect : MonoBehaviour
 {
-    public cardModel cardTest;
+    public cardModel[] cardTest;
     public List<Effect> effects;
     public GameObject menuCam;
     public GameObject menuCanva;
     public TMP_Text loggerTest;
     public GameObject[] players;
     public List<Rigidbody> rigidbodies;
+    public bool testMenu=false;
     private void Start()
     {
-        menuCanva.SetActive(false);
+        menuCanva.SetActive(testMenu);
         for (int i = 0; i < players.Length; i++)
         {
             rigidbodies.Add(players[i].GetComponent<Rigidbody>());
@@ -29,10 +30,10 @@ public class testingEffect : MonoBehaviour
 
     }
 
-    public void Test()
+    public void Test(int i=0)
     {
-        Debug.Log(cardTest.CardDescription);
-        foreach (Effect ef in cardTest.cardEffect)
+        Debug.Log(cardTest[i].CardDescription);
+        foreach (Effect ef in cardTest[i].cardEffect)
         {
             Debug.Log(ef.effect_detail);
             ef.onStart.AddListener(eff=>{
@@ -43,7 +44,7 @@ public class testingEffect : MonoBehaviour
                 Debug.Log("end: "+eff);
             });
         }
-        cardTest.effect(players[0].transform, players[1].transform.position);
+        cardTest[i].effect(players[0].transform, players[1].transform.position);
 
     }
 

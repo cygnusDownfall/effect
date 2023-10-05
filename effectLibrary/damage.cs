@@ -23,9 +23,7 @@ public class damage : Effect
         go.GetComponentInChildren<Canvas>().worldCamera=Camera.current;
         var text=go.GetComponentInChildren<TMP_Text>();
         text.text=System.String.Format("<color={0}>{1}</color>",Dic.singleton.colorOfDame[dmgType],dmg);
-        var effect=Instantiate(playerAssetEffect.Instance.effectHit);
-        effect.GetComponent<VisualEffect>().SetVector4("color",Dic.singleton.colorMap[dmgType]); 
-        Destroy(effect,1);
+       
         Destroy(go,2);
     }
 }
