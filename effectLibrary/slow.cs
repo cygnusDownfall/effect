@@ -5,7 +5,7 @@ using UnityEngine;
 class slow : Effect
 {
     public int slowScale = 30;
-    int slowValue = 0;
+    byte slowValue = 0;
     public override string effect_detail
     {
         get
@@ -23,10 +23,10 @@ class slow : Effect
         base.startEffect(target);
         Debug.Log("slow    ");
         playerInfo playerInfo;
-        if (target.TryGetComponent<playerInfo>(out playerInfo))
+        if (target.TryGetComponent(out playerInfo))
         {
             playerImpacteds = playerInfo;
-            int slow = Convert.ToInt32(playerInfo.speed * slowScale / 100f);
+            byte slow = Convert.ToByte(playerInfo.speed * slowScale / 100f);
 
             slowValue = slow;
             Debug.Log("Speed of player:"+playerInfo.speed);

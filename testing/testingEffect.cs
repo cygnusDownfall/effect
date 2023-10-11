@@ -13,6 +13,7 @@ public class testingEffect : MonoBehaviour
     public GameObject[] players;
     public List<Rigidbody> rigidbodies;
     public bool testMenu=false;
+    public byte testCardID;
     private void Start()
     {
         menuCanva.SetActive(testMenu);
@@ -22,12 +23,7 @@ public class testingEffect : MonoBehaviour
 
         }
         menuCam.GetComponent<CinemachineVirtualCamera>().Priority = 0;
-        Test();
-    }
-
-    void Update()
-    {
-
+        Test(testCardID);
     }
 
     public void Test(int i=0)
@@ -58,5 +54,11 @@ public class testingEffect : MonoBehaviour
             });
             eff.trigger(players[0]);
         }
+    }
+    public void testManaIn(int amount){
+        manaBar.Instance.increaseMana((byte)amount);
+    }
+    public void testManaDe(int amount){
+        manaBar.Instance.decreaseMana((byte)amount);
     }
 }

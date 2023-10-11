@@ -1,6 +1,6 @@
 using UnityEngine;
 public class breakArmor:Effect{
-    public int breakValue = 0;
+    public byte breakValue = 0;
     public DmgType breakType;
     public override string effect_detail
     {
@@ -19,7 +19,7 @@ public class breakArmor:Effect{
         base.startEffect(target);
         Debug.Log("break armor    ");
         playerInfo playerInfo;
-        if (target.TryGetComponent<playerInfo>(out playerInfo))
+        if (target.TryGetComponent(out playerInfo))
         {
             playerImpacteds = playerInfo;
             
@@ -28,6 +28,6 @@ public class breakArmor:Effect{
     }
     public override void endEffect(GameObject gameObjects, GameObject source = null)
     {
-        playerImpacteds.speed += breakValue;
+        playerImpacteds.defence[breakType] += breakValue;
     }
 }
