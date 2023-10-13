@@ -23,13 +23,13 @@ public class testingEffect : MonoBehaviour
 
         }
         menuCam.GetComponent<CinemachineVirtualCamera>().Priority = 0;
-        Test(testCardID);
+        Test();
     }
-
-    public void Test(int i=0)
+    [ContextMenu("Test")]
+    public void Test()
     {
-        Debug.Log(cardTest[i].CardDescription);
-        foreach (Effect ef in cardTest[i].cardEffect)
+        Debug.Log(cardTest[testCardID].CardDescription);
+        foreach (Effect ef in cardTest[testCardID].cardEffect)
         {
             Debug.Log(ef.effect_detail);
             ef.onStart.AddListener(eff=>{
@@ -40,7 +40,7 @@ public class testingEffect : MonoBehaviour
                 Debug.Log("end: "+eff);
             });
         }
-        cardTest[i].effect(players[0].transform, players[1].transform.position);
+        cardTest[testCardID].effect(players[0].transform, players[1].transform.position);
 
     }
 

@@ -24,7 +24,7 @@ public class buffDmg : Effect
         base.triggerEffect(targets);
 
     }
-    public void buff(playerInfo player, Effect effect)
+    public void buff(characterInfo player, Effect effect)
     {
         if (effect.GetType() == typeof(damage))
         {

@@ -17,7 +17,7 @@ public class reflection : Effect
             reflect
         );
     }
-    public void reflect(playerInfo player, Effect effect)
+    public void reflect(characterInfo player, Effect effect)
     {
         if (source == null) {  return; }
         effect.trigger(source);

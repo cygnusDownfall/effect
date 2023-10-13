@@ -32,7 +32,7 @@ public class unaffected : Effect
         );
     }
 
-    public void onChain(playerInfo player, Effect effect)
+    public void onChain(characterInfo player, Effect effect)
     {
         Debug.Log("effect da bi chan {0}", effect);
         if (effect.GetType() != targetType)
