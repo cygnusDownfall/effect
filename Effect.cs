@@ -1,9 +1,10 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Events;
 
 [CreateAssetMenu(menuName = "effect")]
-public class Effect : ScriptableObject
+public class Effect : ScriptableObject, INetworkSerializable
 {
     #region properties
     public byte effect_rate = 100;
@@ -81,6 +82,14 @@ public class Effect : ScriptableObject
         onStart.RemoveAllListeners();
         onEnd.RemoveAllListeners();
         onTrigger.RemoveAllListeners();
+    }
+
+    public virtual void NetworkSerialize<T>(BufferSerializer<T> serializer) where T : IReaderWriter
+    {
+        serializer.SerializeValue(ref effect_rate);
+        serializer.SerializeValue(ref duration);
+        serializer.SerializeValue(ref callbyseccond);
+
     }
     #endregion
 }

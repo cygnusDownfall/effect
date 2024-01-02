@@ -1,6 +1,6 @@
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.VFX;
 
 public class damage : Effect
 {
@@ -26,6 +26,12 @@ public class damage : Effect
         text.text = System.String.Format("<color={0}>{1}</color>", Dic.singleton.colorOfDame[dmgType], dmg);
 
         Destroy(go, 2);
+    }
+    public override void NetworkSerialize<T>(BufferSerializer<T> serializer)
+    {
+        base.NetworkSerialize(serializer);
+        serializer.SerializeValue(ref dmg);
+        serializer.SerializeValue(ref dmgType);
     }
 }
 
