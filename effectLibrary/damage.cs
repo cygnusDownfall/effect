@@ -11,22 +11,8 @@ public class damage : Effect
     {
         var player = targets.GetComponent<playerInfo>();
         player.takeDamage(dmg, dmgType);
-        showDmg(damage, dmgType, targets);
-
-        // breakArmor breakEffect = new breakArmor();
-
-        // player.addChain(breakEffect);
-
     }
-    public void showDmg(int dmg, DmgType dmgType, GameObject target)
-    {
-        var go = Instantiate(playerGeneralInfo.Instance.dmgShowObj, target.transform);
-        go.GetComponentInChildren<Canvas>().worldCamera = Camera.current;
-        var text = go.GetComponentInChildren<TMP_Text>();
-        text.text = System.String.Format("<color={0}>{1}</color>", Dic.singleton.colorOfDame[dmgType], dmg);
 
-        Destroy(go, 2);
-    }
     public override void NetworkSerialize<T>(BufferSerializer<T> serializer)
     {
         base.NetworkSerialize(serializer);
