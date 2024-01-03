@@ -1,4 +1,5 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "effect/Slow")]
@@ -6,6 +7,12 @@ class slow : Effect
 {
     public int slowScale = 30;
     byte slowValue = 0;
+    public override void NetworkSerialize<T>(BufferSerializer<T> serializer)
+    {
+        base.NetworkSerialize(serializer);
+        serializer.SerializeValue(ref slowValue);
+        serializer.SerializeValue(ref slowScale);
+    }
     public override string effect_detail
     {
         get
@@ -29,9 +36,9 @@ class slow : Effect
             byte slow = Convert.ToByte(playerInfo.speed * slowScale / 100f);
 
             slowValue = slow;
-            Debug.Log("Speed of player:"+playerInfo.speed);
+            Debug.Log("Speed of player:" + playerInfo.speed);
             playerInfo.speed -= slow;
-            Debug.Log("slow value:"+slow);
+            Debug.Log("slow value:" + slow);
         }
     }
     public override void endEffect(GameObject gameObjects, GameObject source = null)

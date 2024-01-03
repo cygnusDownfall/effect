@@ -1,9 +1,14 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public class disscard : Effect
 {
     public int num = 1;
-
+    public override void NetworkSerialize<T>(BufferSerializer<T> serializer)
+    {
+        base.NetworkSerialize(serializer);
+        serializer.SerializeValue(ref num);
+    }
     public override void startEffect(GameObject targets, GameObject source = null)
     {
         base.startEffect(targets, source);

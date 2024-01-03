@@ -1,9 +1,15 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "effect/healing/healing")]
 public class healing : Effect
 {
     public int heal;
+    public override void NetworkSerialize<T>(BufferSerializer<T> serializer)
+    {
+        base.NetworkSerialize(serializer);
+        serializer.SerializeValue(ref heal);
+    }
     public override string effect_detail
     {
         get => System.String.Format(

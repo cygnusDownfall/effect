@@ -1,9 +1,15 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 [CreateAssetMenu(menuName = "effect/unaffected")]
 public class unaffected : Effect
 {
     public string TargetTypeName;
+    public override void NetworkSerialize<T>(BufferSerializer<T> serializer)
+    {
+        base.NetworkSerialize(serializer);
+        serializer.SerializeValue(ref TargetTypeName);
+    }
     public override string effect_detail
     {
         get

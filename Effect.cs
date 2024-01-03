@@ -34,8 +34,8 @@ public class Effect : ScriptableObject, INetworkSerializable
     public delegate void EffectDelegate(GameObject target, GameObject source = null);
     public IEnumerator trigger(GameObject target)
     {
-        float r;
-        if ((r = Random.value) < (effect_rate / 100f))
+        int r;
+        if ((r = Random.Range(0, 100)) < effect_rate)
         {
             Debug.Log("random rate:" + r);
             return DurationCall(triggerEffect, source, target, startEffect, endEffect);
@@ -89,6 +89,7 @@ public class Effect : ScriptableObject, INetworkSerializable
         serializer.SerializeValue(ref effect_rate);
         serializer.SerializeValue(ref duration);
         serializer.SerializeValue(ref callbyseccond);
+        // serializer.SerializeValue(ref detail);
 
     }
     #endregion
