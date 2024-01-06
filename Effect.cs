@@ -89,7 +89,8 @@ public class Effect : ScriptableObject, INetworkSerializable
         serializer.SerializeValue(ref effect_rate);
         serializer.SerializeValue(ref duration);
         serializer.SerializeValue(ref callbyseccond);
-        // serializer.SerializeValue(ref effect_detail);
+        serializer.SerializeValue(ref detail);
+
     }
     #endregion
 }
