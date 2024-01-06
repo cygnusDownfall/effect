@@ -50,6 +50,7 @@ public class Effect : ScriptableObject, INetworkSerializable
     }
     public virtual void startEffect(GameObject targets, GameObject source = null)
     {
+        Debug.Log("call parent ");
         onStart.Invoke(this);
         //targets.GetComponent<playerInfo>().addChain(this); add xong moi chay nen khong the dat o day 
     }
@@ -89,8 +90,7 @@ public class Effect : ScriptableObject, INetworkSerializable
         serializer.SerializeValue(ref effect_rate);
         serializer.SerializeValue(ref duration);
         serializer.SerializeValue(ref callbyseccond);
-        serializer.SerializeValue(ref detail);
-
+       
     }
     #endregion
 }

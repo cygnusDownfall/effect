@@ -18,7 +18,9 @@ public class continuesDamage : damage
     }
     public override void triggerEffect(GameObject targets, GameObject source = null)
     {
+        Debug.Log("call sub class ");
         base.triggerEffect(targets);
         Dmg(dmg,dmgType,targets);
     }
+   
 }
