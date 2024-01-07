@@ -28,7 +28,7 @@ public class directDamge : damage
     public override void startEffect(GameObject targets, GameObject source = null)
     {
         base.startEffect(targets);
-        Dmg(dmg, dmgType, targets);
+        Dmg(targets);
     }
 
 }

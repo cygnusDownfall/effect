@@ -20,7 +20,7 @@ public class continuesDamage : damage
     {
         Debug.Log("call sub class ");
         base.triggerEffect(targets);
-        Dmg(dmg,dmgType,targets);
+        Dmg(targets);
     }
-   
+
 }

@@ -57,7 +57,7 @@ public class Effect : ScriptableObject, INetworkSerializable
     public virtual void endEffect(GameObject targets, GameObject source = null)
     {
         onEnd.Invoke(this);
-        targets.GetComponent<playerInfo>().removeChain(this);
+        targets.GetComponent<characterInfo>().removeChain(this);
         Destroy(this);
     }
     #endregion
@@ -90,7 +90,7 @@ public class Effect : ScriptableObject, INetworkSerializable
         serializer.SerializeValue(ref effect_rate);
         serializer.SerializeValue(ref duration);
         serializer.SerializeValue(ref callbyseccond);
-       
+
     }
     #endregion
 }

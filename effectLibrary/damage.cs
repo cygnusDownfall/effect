@@ -7,10 +7,13 @@ public class damage : Effect
     public int dmg = 0;
     public DmgType dmgType;
 
-    public void Dmg(int damage, DmgType dmgType, GameObject targets)
+    public void Dmg(GameObject targets)
     {
-        var player = targets.GetComponent<playerInfo>();
-        player.takeDamage(dmg, dmgType);
+        if (targets == null) return;
+        if (targets.TryGetComponent(out enemyInfo info))
+        {
+            info.takeDamage(dmg, dmgType);
+        }
     }
 
     public override void NetworkSerialize<T>(BufferSerializer<T> serializer)
